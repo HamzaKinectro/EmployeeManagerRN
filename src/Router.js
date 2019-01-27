@@ -7,8 +7,9 @@ export const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root" hideNavBar={true}>
-        <Scene key="auth">
+        <Scene>
           <Scene
+            key="auth"
             title="Login"
             key="login"
             component={LoginForm}

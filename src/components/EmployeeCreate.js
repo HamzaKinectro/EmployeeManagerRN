@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import { View, Text, Picker } from "react-native";
 import { connect } from "react-redux";
-import { employeeUpdate } from "./actions";
-import { CardSection, Input } from "./commons";
+import { employeeUpdate, employeeCreate } from "./actions";
+import { CardSection, Input, Button } from "./commons";
 
 class EmployeeForm extends Component {
+  CreateButtonhandler() {
+    const { name, shift, phone } = this.props;
+    this.props.employeeCreate({
+      name,
+      phone,
+      shift
+    });
+  }
   render() {
     return (
       <View>
@@ -30,12 +38,15 @@ class EmployeeForm extends Component {
           />
         </CardSection>
 
-        {/* <CardSection style={{ flexDirection: 'column' }}>
+        <CardSection style={{ flexDirection: "column" }}>
           <Text style={styles.pickerTextStyle}>Shift</Text>
           <Picker
             style={{ flex: 1 }}
             selectedValue={this.props.shift}
-            onValueChange={value => this.props.employeeUpdate({ prop: 'shift', value })}
+            onValueChange={value =>
+              this.props.employeeUpdate({ prop: "shift", value })
+            }
+            mode="dropdown"
           >
             <Picker.Item label="Monday" value="Monday" />
             <Picker.Item label="Tuesday" value="Tuesday" />
@@ -45,7 +56,10 @@ class EmployeeForm extends Component {
             <Picker.Item label="Saturday" value="Saturday" />
             <Picker.Item label="Sunday" value="Sunday" />
           </Picker>
-        </CardSection> */}
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.CreateButtonhandler.bind(this)}>Create</Button>
+        </CardSection>
       </View>
     );
   }
@@ -54,7 +68,9 @@ class EmployeeForm extends Component {
 const styles = {
   pickerTextStyle: {
     fontSize: 18,
-    paddingLeft: 20
+    paddingLeft: 20,
+    paddingRight: 80,
+    paddingTop: 10
   }
 };
 
@@ -66,5 +82,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { employeeUpdate }
+  { employeeUpdate, employeeCreate }
 )(EmployeeForm);
